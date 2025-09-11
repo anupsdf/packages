@@ -27,6 +27,11 @@ export CC := 'clang-19'
 export CXX := 'clang++-19'
 export CLANG_VERSION := '19'
 
+# Print compiler flags for debugging
+$(info CC flag set as $(CC))
+$(info CXX flag set as $(CXX))
+$(info CLANG_VERSION flag set as $(CLANG_VERSION))
+
 %:
 	dh $@ --with autoreconf --with systemd --parallel
 override_dh_autoreconf:
