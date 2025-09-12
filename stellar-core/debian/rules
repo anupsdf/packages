@@ -22,6 +22,12 @@ DEB_CONFIGURE_OPTS ?= --prefix=/usr --includedir=/usr/include --mandir=/usr/shar
 export HOME := $(CURDIR)/rusthome
 export PATH := $(HOME)/.cargo/bin:$(PATH)
 
+# Print clang version information
+$(info Pre-installed clang version: $(shell clang --version 2>/dev/null | head -1 || echo "clang not found"))
+$(info Pre-installed clang++ version: $(shell clang++ --version 2>/dev/null | head -1 || echo "clang++ not found"))
+$(info Pre-installed clang-19 version: $(shell clang-19 --version 2>/dev/null | head -1 || echo "clang-19 not found"))
+$(info Pre-installed clang++-19 version: $(shell clang++-19 --version 2>/dev/null | head -1 || echo "clang++-19 not found"))
+
 # export CC and CXX so they are picked up by the rust cc library
 export CC := 'clang-12'
 export CXX := 'clang++-12'
@@ -29,7 +35,6 @@ export CXX := 'clang++-12'
 # Print compiler flags for debugging
 $(info CC flag set as $(CC))
 $(info CXX flag set as $(CXX))
-$(info CLANG_VERSION flag set as $(CLANG_VERSION))
 
 
 %:
