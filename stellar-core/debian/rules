@@ -41,6 +41,12 @@ override_dh_autoreconf:
 # dh_make generated override targets
 # This is example for Cmake (See https://bugs.debian.org/641051 )
 override_dh_auto_configure:
+	# Install Clang 19 and required libraries
+	apt update
+	apt install -y clang-19 libc++-19-dev libc++abi-19-dev
+	# Print installed Clang versions for verification
+	@echo "anup test - Clang-19 version: " && clang-19 --version | head -1
+	@echo "anup test - Clang++-19 version: " && clang++-19 --version | head -1
 	mkdir -p $(HOME)
 	./install-rust.sh
 	./configure $(DEB_CONFIGURE_OPTS) $(DEB_CONFIGURE_OPTS_APPEND)
