@@ -51,6 +51,9 @@ override_dh_auto_configure:
 	# Switch to Clang-19 for the build process
 	$(eval export CC := clang-19)
 	$(eval export CXX := clang++-19)
+	$(eval export ASAN_OPTIONS := detect_leaks=1:abort_on_error=1)
+	$(eval export UBSAN_OPTIONS := print_stacktrace=1:abort_on_error=1)
+	$(eval export LD_LIBRARY_PATH := /usr/lib/llvm-19/lib:$$LD_LIBRARY_PATH)
 	@echo "Switched CC to: $(CC)"
 	@echo "Switched CXX to: $(CXX)"
 	mkdir -p $(HOME)
