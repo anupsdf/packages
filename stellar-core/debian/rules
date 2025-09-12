@@ -47,12 +47,7 @@ override_dh_auto_configure:
 	@echo "Pre-installed Clang++ version:" && (clang++ --version | head -1 || echo "clang++ not found")
 	@echo "Pre-installed Clang-19 version:" && (clang-19 --version | head -1 || echo "clang-19 not found")
 	@echo "Pre-installed Clang++-19 version:" && (clang++-19 --version | head -1 || echo "clang++-19 not found")
-	# Install Clang 19 and required libraries
-	apt update
-	apt install -y clang-19 libc++-19-dev libc++abi-19-dev
-	# Print installed Clang versions for verification
-	@echo "Clang-19 version: " && clang-19 --version | head -1
-	@echo "Clang++-19 version: " && clang++-19 --version | head -1
+	# Clang-19 is already available, no installation needed
 	# Switch to Clang-19 for the build process
 	$(eval export CC := clang-19)
 	$(eval export CXX := clang++-19)
