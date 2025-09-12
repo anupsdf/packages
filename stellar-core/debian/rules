@@ -28,9 +28,16 @@ $(info Pre-installed clang++ version: $(shell clang++ --version 2>/dev/null | he
 $(info Pre-installed clang-19 version: $(shell clang-19 --version 2>/dev/null | head -1 || echo "clang-19 not found"))
 $(info Pre-installed clang++-19 version: $(shell clang++-19 --version 2>/dev/null | head -1 || echo "clang++-19 not found"))
 
+# Detect available clang version in priority order 19, 18, 17, 16, 15, 14, 13, 12, then generic clang
+CLANG_AVAILABLE := $(shell which clang-19 >/dev/null 2>&1 && echo "clang-19" || (which clang-18 >/dev/null 2>&1 && echo "clang-18" || (which clang-17 >/dev/null 2>&1 && echo "clang-17" || (which clang-16 >/dev/null 2>&1 && echo "clang-16" || (which clang-15 >/dev/null 2>&1 && echo "clang-15" || (which clang-14 >/dev/null 2>&1 && echo "clang-14" || (which clang-13 >/dev/null 2>&1 && echo "clang-13" || (which clang-12 >/dev/null 2>&1 && echo "clang-12" || (which clang >/dev/null 2>&1 && echo "clang" || echo "none")))))))))
+CLANGXX_AVAILABLE := $(shell which clang++-19 >/dev/null 2>&1 && echo "clang++-19" || (which clang++-18 >/dev/null 2>&1 && echo "clang++-18" || (which clang++-17 >/dev/null 2>&1 && echo "clang++-17" || (which clang++-16 >/dev/null 2>&1 && echo "clang++-16" || (which clang++-15 >/dev/null 2>&1 && echo "clang++-15" || (which clang++-14 >/dev/null 2>&1 && echo "clang++-14" || (which clang++-13 >/dev/null 2>&1 && echo "clang++-13" || (which clang++-12 >/dev/null 2>&1 && echo "clang++-12" || (which clang++ >/dev/null 2>&1 && echo "clang++" || echo "none")))))))))
+
+$(info Detected clang: $(CLANG_AVAILABLE))
+$(info Detected clang++: $(CLANGXX_AVAILABLE))
+
 # export CC and CXX so they are picked up by the rust cc library
-export CC := 'clang-12'
-export CXX := 'clang++-12'
+export CC := $(CLANG_AVAILABLE)
+export CXX := $(CLANGXX_AVAILABLE)
 
 # Print compiler flags for debugging
 $(info CC flag set as $(CC))
