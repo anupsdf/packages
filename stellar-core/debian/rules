@@ -23,9 +23,8 @@ export HOME := $(CURDIR)/rusthome
 export PATH := $(HOME)/.cargo/bin:$(PATH)
 
 # export CC and CXX so they are picked up by the rust cc library
-export CC := 'clang-19'
-export CXX := 'clang++-19'
-export CLANG_VERSION := '19'
+export CC := 'clang-12'
+export CXX := 'clang++-12'
 
 # Print compiler flags for debugging
 $(info CC flag set as $(CC))
@@ -54,6 +53,11 @@ override_dh_auto_configure:
 	# Print installed Clang versions for verification
 	@echo "Clang-19 version: " && clang-19 --version | head -1
 	@echo "Clang++-19 version: " && clang++-19 --version | head -1
+	# Switch to Clang-19 for the build process
+	$(eval export CC := clang-19)
+	$(eval export CXX := clang++-19)
+	@echo "Switched CC to: $(CC)"
+	@echo "Switched CXX to: $(CXX)"
 	mkdir -p $(HOME)
 	./install-rust.sh
 	./configure $(DEB_CONFIGURE_OPTS) $(DEB_CONFIGURE_OPTS_APPEND)
